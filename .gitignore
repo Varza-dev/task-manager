@@ -1,0 +1,42 @@
+# --- General / OS ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Frontend (React/Vite/Vitest) ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.*.local
+coverage/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build folders
+bin/
+obj/
+
+#Exclude db migrations
+Migrations/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# Publish output
+publish/
+appsettings.Development.json
+
+#Database / Local Storage
+*.db
+*.sqlite
+/App_Data/

@@ -1,0 +1,350 @@
+:root {
+    /* Global Layout Constants */
+    --lane-width: 350px;
+    --gap: 20px;
+    --content-max-width: calc((var(--lane-width) * 3) + (var(--gap) * 2));
+
+    /* Global Colors */
+    --primary: #007bff;
+    --primary-hover: #0056b3;
+    --bg-lane: #f4f4f4;
+}
+
+.App {
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* --- Action Bar --- */
+.action-bar {
+    width: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+    max-width: var(--content-max-width);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.action-bar__content {
+    width: 100%;
+    max-width: var(--content-max-width);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.action-bar__left, .action-bar__right {
+    flex: 1;
+}
+
+.action-bar__title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    flex: 2;
+}
+
+.action-bar__right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --- Button Styles --- */
+.btn {
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn--add-task, .btn--save {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn--add-task:hover, .btn--save:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn--add-task:active, .btn--save:active {
+    transform: scale(0.98);
+}
+
+.btn--cancel {
+    background-color: #eee;
+    color: #333;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* --- Task Board & Lanes --- */
+.task-board {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.task-board__lanes {
+    display: flex;
+    gap: var(--gap);
+    padding: 30px 20px;
+    width: 100%;
+    max-width: var(--content-max-width);
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.task-lane {
+    background-color: var(--bg-lane);
+    width: var(--lane-width);
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    outline: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+.task-lane--is-over {
+    background-color: #edf2ff;
+    outline: 2px dashed #4c6ef5;
+}
+
+.task-lane__title {
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.task-lane__placeholder {
+    height: 80px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    border: 2px dashed #ccc;
+    margin-top: 10px;
+}
+
+.task-lane__empty-state {
+    margin-top: 20px;
+    text-align: center;
+    color: #999;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.task-lane__empty-text { margin: 0; }
+
+/* --- Task Card --- */
+.task-card {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    position: relative;
+    cursor: grab;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.task-card--dragging {
+    opacity: 0.5;
+    z-index: 999;
+    cursor: grabbing;
+}
+
+.task-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-card__title {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.task-card__description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+.task-card__footer {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Task Card Buttons */
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    padding: 5px;
+}
+
+.delete-btn:hover {
+    color: #dc3545;
+    transform: scale(1.2);
+}
+
+.edit-btn-faint {
+    background: none;
+    border: none;
+    padding: 12px;
+    margin: -8px;
+    cursor: pointer;
+    color: #666;
+    opacity: 0.3;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-btn-faint:hover {
+    opacity: 1;
+    color: #333;
+    transform: scale(1.1);
+}
+
+/* --- Task Details Edit Modal --- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.task-modal {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.task-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.task-modal__close-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #666;
+    transition: color 0.2s;
+}
+.task-modal__close-btn:hover { color: #333; }
+
+.task-modal__field {
+    margin-bottom: 15px;
+}
+.task-modal__label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.task-modal__input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.task-modal__input--textarea {
+    height: 100px;
+    resize: none;
+}
+
+.task-modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* --- Undo Toast --- */
+.undo-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 2000;
+    animation: fadeIn 0.3s ease, fadeOut 0.5s ease 14.5s forwards;
+}
+
+.undo-toast button {
+    background: none;
+    border: none;
+    color: #ffc107;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; bottom: 10px; }
+    to { opacity: 1; bottom: 30px; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* --- Nice re-layout when resizing window --- */
+@media (max-width: 1000px) {
+    .task-board__lanes {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .task-lane {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .action-bar__content {
+        padding: 0 20px;
+    }
+}
