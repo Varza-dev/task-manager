@@ -39,4 +39,7 @@ appsettings.Development.json
 #Database / Local Storage
 *.db
 *.sqlite
+*.db
+*.db-shm
+*.db-wal
 /App_Data/

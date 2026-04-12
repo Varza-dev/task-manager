@@ -4,13 +4,13 @@ import axiosClient from "./axiosClient.ts";
 export const taskService = {
     // Get all tasks
     getTasks: async (): Promise<Task[]> => {
-        const response = await axiosClient.get<Task[]>('');
+        const response = await axiosClient.get<Task[]>(`/tasks`);
         return response.data;
     },
 
     // Create a new task
     createTask: async (task: TaskCreateDto): Promise<Task> => {
-        const response = await axiosClient.post<Task>('', task);
+        const response = await axiosClient.post<Task>(`/new`, task);
         return response.data;
     },
 

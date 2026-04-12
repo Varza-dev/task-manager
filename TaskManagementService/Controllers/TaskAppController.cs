@@ -17,8 +17,8 @@ public class TaskAppController : ControllerBase
         _context = context;
     }
 
-    // GET: api/todo -- gets list of tasks
-    [HttpGet]
+    // GET: api/taskapp/tasks -- gets list of tasks
+    [HttpGet("tasks")]
     public async Task<ActionResult<IEnumerable<TaskResponseDto>>> GetTasks(bool includeDeleted = false, int userId = CURRENT_USER_ID)
     {
         var query = _context.ToDoTasks
@@ -42,8 +42,8 @@ public class TaskAppController : ControllerBase
         return Ok(tasks);
     }
 
-    // POST: api/todo -- creates new task
-    [HttpPost]
+    // POST: api/taskapp/new -- creates new task
+    [HttpPost("new")]
     public async Task<ActionResult<TaskResponseDto>> CreateTask(TaskCreateDto taskDto)
     {
         var task = new ToDoTask
@@ -61,7 +61,7 @@ public class TaskAppController : ControllerBase
         return CreatedAtAction(nameof(CreateTask), new { id = task.TaskId }, task);
     }
 
-    // PATCH: api/todo/{id}/status -- support faster partial update to just move a task between statuses
+    // PATCH: api/taskapp/{id}/status -- support faster partial update to just move a task between statuses
     [HttpPatch("{id}/status")]
     public async Task<IActionResult> UpdateStatus(int id, [FromBody] TaskStatusUpdateDto newStatus, int userId = CURRENT_USER_ID)
     {
@@ -88,7 +88,7 @@ public class TaskAppController : ControllerBase
         ));
     }
 
-    // PUT: api/todo/{id}/update -- update a task's title, description, or due date
+    // PUT: api/taskapp/{id}/update -- update a task's title, description, or due date
     [HttpPut("{id}/update")]
     public async Task<ActionResult<TaskResponseDto>> UpdateTaskDetails(int id, [FromBody] TaskUpdateDto taskUpdateDto, int userId = CURRENT_USER_ID)
     {
@@ -135,7 +135,7 @@ public class TaskAppController : ControllerBase
         return NoContent();
     }
 
-    // RESTORE: api/todo/{id}/restore -- restore a deleted task (to support "undo" operations)
+    // RESTORE: api/taskapp/{id}/restore -- restore a deleted task (to support "undo" operations)
     [HttpPost("{id}/restore")]
     public async Task<IActionResult> RestoreTask(int id, int userId = CURRENT_USER_ID)
     {
