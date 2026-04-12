@@ -8,6 +8,11 @@ import { TaskDetailsModal } from "./taskDetailsModal.tsx";
 import { closestCorners, DndContext, type DragEndEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import confetti from "canvas-confetti";
 
+/**
+ * The main task board component. This is the parent component for TaskLane and TaskCard.
+ * Data operations (task editing, saving, deletion, undo deletion) are routed to this component, as it
+ * implements the corresponding handlers.
+ */
 export const TaskBoard = () => {
     const { tasks, loading, error, refresh } = useTasks();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,6 +30,7 @@ export const TaskBoard = () => {
         })
     );
 
+    // task saving logic, for new task or editing an existing task
     const handleSaveTask = async (targetTask: TaskCreateDto | TaskUpdateDto) => {
         try {
             if (editingTask) {
@@ -41,9 +47,8 @@ export const TaskBoard = () => {
         }
     };
 
+    // task deletion implementation
     const handleDeleteTask = async (id: number) => {
-        //if (!window.confirm("Are you sure you want to delete this task?")) return;
-
         try {
             await taskService.deleteTask(id);
             setLastDeletedId(id);
@@ -64,6 +69,7 @@ export const TaskBoard = () => {
         }
     };
 
+    // task deletion undo implementation (callback comes from the toast)
     const handleUndo = async () => {
         if (lastDeletedId) {
             try {
@@ -77,6 +83,7 @@ export const TaskBoard = () => {
         }
     };
 
+    // the implementation of the dragEnd event from dnd-kit
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
 
@@ -85,6 +92,7 @@ export const TaskBoard = () => {
             const newStatus = Number(over.id);
 
             const targetTask = tasks.find(t => t.taskId === taskId);
+            console.log("Target Task Found:", targetTask?.title, "Status:", targetTask?.status);
 
             try {
                 await taskService.updateTaskStatus(taskId, newStatus);

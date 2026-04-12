@@ -1,8 +1,10 @@
 :root {
-    /* Global Layout Constants */
-    --lane-width: 350px;
+    /* Global Layout and Sizing Constants */
+    /* Clamping this so the lanes don't get too wide or too narrow when resizing */
+    --content-max-width: clamp(800px, 80vw, 1200px);
     --gap: 20px;
-    --content-max-width: calc((var(--lane-width) * 3) + (var(--gap) * 2));
+    /* Calculate lane width based on how much space we have */
+    --lane-width: calc((var(--content-max-width) - (var(--gap) * 2)) / 3);
 
     /* Global Colors */
     --primary: #007bff;
@@ -331,12 +333,13 @@
     to { opacity: 0; visibility: hidden; }
 }
 
-/* --- Nice re-layout when resizing window --- */
+/* --- Nice re-layout when resizing window, at narrowest, lanes will snap to 1 column --- */
 @media (max-width: 1000px) {
     .task-board__lanes {
         flex-direction: column;
         align-items: center;
         padding: 20px;
+        max-width: 95vw;
     }
 
     .task-lane {

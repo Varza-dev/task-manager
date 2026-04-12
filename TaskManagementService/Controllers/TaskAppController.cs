@@ -19,11 +19,17 @@ public class TaskAppController : ControllerBase
 
     // GET: api/todo -- gets list of tasks
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TaskResponseDto>>> GetTasks(bool deleted = false, int userId = CURRENT_USER_ID)
+    public async Task<ActionResult<IEnumerable<TaskResponseDto>>> GetTasks(bool includeDeleted = false, int userId = CURRENT_USER_ID)
     {
-        var tasks = await _context.ToDoTasks
-            .Where(t => t.UserId == userId && t.Deleted == deleted)
-            .OrderByDescending(t => t.UpdatedAt)
+        var query = _context.ToDoTasks
+            .Where(t => t.UserId == userId);
+
+        if (!includeDeleted)
+        {
+            query = query.Where(t => t.Deleted == false);
+        }
+
+        var tasks = await query.OrderByDescending(t => t.UpdatedAt)
             .Select(t => new TaskResponseDto(
                 t.TaskId,
                 t.Title,

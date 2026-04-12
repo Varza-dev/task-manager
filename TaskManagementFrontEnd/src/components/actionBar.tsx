@@ -5,6 +5,11 @@ interface Props {
     onAddTask: () => void;
 }
 
+/**
+ * This is the ActionBar at the top of the page, containing the board name (currently hardcoded) and
+ * the "New Task" button for adding tasks.
+ * @param onAddTask - call back for adding a new task
+ */
 export const ActionBar = ({ onAddTask }: Props) => {
     return (
         <div className="action-bar">

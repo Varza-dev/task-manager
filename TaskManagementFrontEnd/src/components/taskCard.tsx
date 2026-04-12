@@ -12,6 +12,13 @@ interface Props {
     onEdit: (task: Task) => void;
 }
 
+/**
+ * Component for rendering a task card. Calls back for editing or deleting a task, these calls are
+ * ultimately routed to the TaskBoard.
+ * @param task - the task this TaskCard will render
+ * @param onEdit - callback function sent when editing task
+ * @param onDelete - callback function, sent when delete button is clicked
+ */
 export const TaskCard = ({ task, onEdit, onDelete }: Props) => {
     const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
         id: task.taskId,
@@ -30,7 +37,7 @@ export const TaskCard = ({ task, onEdit, onDelete }: Props) => {
         }).format(dueDate)
         : null;
 
-    // Dynamic CSS
+    // Dynamic styling
     const dynamicStyles: React.CSSProperties = {
         transform: CSS.Translate.toString(transform),
         transition: isDragging ? 'none' : 'box-shadow 0.3s ease, transform 0.1s ease',
@@ -43,17 +50,17 @@ export const TaskCard = ({ task, onEdit, onDelete }: Props) => {
             {...listeners}
             {...attributes}
             className={`task-card ${isDragging ? 'task-card--dragging' : ''}`}
-            style={dynamicStyles}
-        >
-            <div className="task-card__header">
+            style={dynamicStyles}>
+
+            <div className="task-card__header"
+                 data-testid="task-card">
                 <button
                     className="edit-btn-faint"
                     onClick={(e) => {
                         e.stopPropagation();
                         onEdit(task);
                     }}
-                    title="Edit Task"
-                >
+                    title="Edit Task">
                     <FontAwesomeIcon icon={faPencilAlt} size="sm" />
                 </button>
 
@@ -66,8 +73,7 @@ export const TaskCard = ({ task, onEdit, onDelete }: Props) => {
                         onDelete(task.taskId);
                     }}
                     onPointerDown={(e) => e.stopPropagation()}
-                    title="Delete Task"
-                >
+                    title="Delete Task">
                     <FontAwesomeIcon icon={faTrash} />
                 </button>
             </div>

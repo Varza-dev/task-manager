@@ -11,6 +11,14 @@ interface Props {
     onDeleteTask: (id: number) => void;
 }
 
+/**
+ * TaskLane is a container for TaskCards. Each TaskLane will correspond to a task state.
+ * @param title - title is somewhat dynamic (displays task counts for each state)
+ * @param tasks - the list of tasks this TaskLane will contain
+ * @param taskStatus - the task status this TaskLane will correspond to
+ * @param onEditTask - intermediary callback: received from TaskCard and routed to TaskBoard
+ * @param onDeleteTask - intermediary callback: received from TaskCard and routed to TaskBoard
+ */
 export const TaskLane = ({ title, tasks, taskStatus, onEditTask, onDeleteTask }: Props) => {
     const { setNodeRef, isOver } = useDroppable({
         id: taskStatus, // This is the TodoStatus enum value

@@ -11,6 +11,15 @@ interface Props {
     initialTask?: Task;
 }
 
+/**
+ * This is the Task editing/creation modal. If an initial task is given, this will be "edit" mode.
+ * If not initial task is passed in, the modal opens in "Create new task" mode with placeholder text.
+ * @param isOpen - property managing the open state of the modal
+ * @param isSaving - property managing the "save in progress" mode of this modal
+ * @param onClose - callback when closing the modal
+ * @param onSave - callback when saving the task edited in the modal
+ * @param initialTask - existing task to open for the "edit" mode of this modal
+ */
 export const TaskDetailsModal = ({ isOpen, isSaving, onClose, onSave, initialTask }: Props) => {
     const [title, setTitle] = useState(initialTask?.title ?? '');
     const [description, setDescription] = useState(initialTask?.description ?? '');
@@ -18,13 +27,16 @@ export const TaskDetailsModal = ({ isOpen, isSaving, onClose, onSave, initialTas
         initialTask?.dueDate ? initialTask.dueDate.split('T')[0] : ""
     );
 
+    // Task validity gate for enabling or disabling the save button. For now, only a title is required.
+    const isValidTask = title.trim();
+
     const today = new Date().toISOString().split('T')[0];
 
     if (!isOpen) return null;
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!title.trim()) return;
+        if (!isValidTask) return;
 
         onSave({
             title,
@@ -84,7 +96,7 @@ export const TaskDetailsModal = ({ isOpen, isSaving, onClose, onSave, initialTas
                         <button type="button" onClick={onClose} className="btn btn--cancel">
                             Cancel
                         </button>
-                        <button type="submit" disabled={isSaving} className="btn btn--save">
+                        <button type="submit" disabled={isSaving || !isValidTask} className="btn btn--save">
                             {isSaving ? "Saving..." : <><FontAwesomeIcon icon={faSave} /> Save Task</>}
                         </button>
                     </footer>
