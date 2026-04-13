@@ -24,9 +24,6 @@ lerna-debug.log*
 bin/
 obj/
 
-#Exclude db migrations
-Migrations/
-
 # User-specific files
 *.user
 *.userosscache
@@ -43,3 +40,6 @@ appsettings.Development.json
 *.db-shm
 *.db-wal
 /App_Data/
+
+# Exclude Migrations folder as this demo should be a "clean install"
+/Migrations

@@ -18,6 +18,8 @@ This project uses SQLite for local development. By default, the database will be
 ```bash
 cd TaskManagementService
 # Initialize the database
+dotnet ef migrations add InitialCreate
+# Apply Migrations (currently none)
 dotnet ef database update
 # Restore dependencies
 dotnet restore
