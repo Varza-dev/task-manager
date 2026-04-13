@@ -36,7 +36,7 @@ dotnet restore
 # Build the project
 dotnet build
 # Run the tests
-`dotnet test`
+dotnet test
 ```
 
 ### 2. Front-end
@@ -59,7 +59,7 @@ The app will run at `http://localhost:5173/` (the default Vite configuration)
 
 To run the Vitest suite:
 ```bash
-npm test
+npx vitest run
 ```
 
 # Scope and Assumptions
@@ -74,9 +74,10 @@ To ensure simplicity and reliability, I set the following boundaries on scope:
 * **Database**: this app is using a very small local SQLite database (set up and managed with EFCore). In a production system, we could expect both higher traffic and much more data, so I would use a cloud database service, as well as a more scalable service architecture and deployment (i.e. run on a fleet, using load balancing and/or API gateways)
 
 # Future Work
-While the current version showcases task management, I have identified several areas for future development neede to transform this into a full-fledged production system:
+While the current version showcases task management, I have identified several areas for future development needed to transform this into a full-fledged production system:
+* **Testing**: The tests included are more "proof of concept" rather than full-coverage tests. For a production system, I would start tracking test coverage, as well as implement smoke and integration tests.
 * **Authentication and Authorization**: Integrate with an identity system to build user registration and secure login. (options are ASP.NET Core Identity or Auth0)
-* **Multiple/Customizable Task Boards**: Allow users to build different boards for different projects. This requires a major update to the database schema. Provide more than one board design (like Airtable does)
+* **Multiple/Customizable Task Boards**: Allow users to build different boards for different projects. This requires a major update to the database schema. Provide more than one board design (like Airtable does). Allow for lane editing (adding lanes and custom lane naming).
 * **Personalized Data**: Build user-specific data silos, ensuring users only see and interact with their own boards.
 * **Accessibility and Inclusive Design**: I chose the color palette for my own "fun" rather than accessibility compliance (stoplight colors are not color-blind friendly). An actual production app should comply with accessibility guidelines, allowing for high-contrast, large size, and color-blind-friendly color configurations.
 * **Keyboard Navigation**: Enable keyboard navigation and screen reading for users who rely on assistive technologies.

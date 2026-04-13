@@ -31,9 +31,9 @@ The project uses **Vitest** and **React Testing Library** for unit testing.
 ## Dependencies
 
 * **React 18** (Functional Components, Hooks)
-* **Vite** (Build Tool)
+* **Vite** (Build and App Runner Tool)
 * **TypeScript** (Static Typing)
-* **@dnd-kit** (Drag and Drop)
+* **dnd-kit** (Drag and Drop)
 * **Vitest & React Testing Library** (Testing)
 * **FontAwesome** (Icons)
 * **canvas-confetti** (Confetti animation when completing a task)
