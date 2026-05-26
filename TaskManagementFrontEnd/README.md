@@ -4,7 +4,7 @@ This project was build with TypeScript, React, and Vite. My goal was to build an
 
 ## Architecture
 
-* **Component Composition**: Used a Container pattern. The `TaskBoard` is the main orchestrator for state and API calls, while interactive components like `TaskCard` and `TaskDetailsModal` focus on UI and user interaction.
+* **Component Composition**: Used a container pattern. The `TaskBoard` is the main orchestrator for state and API calls, while interactive components like `TaskCard` and `TaskDetailsModal` focus on UI and user interaction.
 * **Data and Callback Management**: Task data and board state are managed at the top level (by `TaskBoard`) to ensure synchronized updates when tasks are modified, created, or deleted.
 * **Type Safety**: Used TypeScript interfaces for `Task`, `TaskStatus`, and API DTOs to ensure data consistency between the frontend and the .NET service.
 * **Styling**: Centralized CSS definitions in App.css, except for dynamic styles (those had to stay in the component).
